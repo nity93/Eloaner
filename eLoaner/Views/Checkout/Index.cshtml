@@ -1,0 +1,77 @@
+﻿@model eLoaner.Models.CheckoutViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("New Check-Out", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Checkout.AssetID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Checkout.CustomerID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Checkout.CheckOutDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Checkout.DueDate)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.Checkout.CheckInDate)
+        </th>*@
+        @*<th>
+            @Html.DisplayNameFor(model => model.Checkout.CheckedOutBy)
+        </th>*@
+        @*<th>
+            @Html.DisplayNameFor(model => model.Checkout.CheckInBy)
+        </th>*@
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.CheckOuts)
+{
+
+    var customer = Model.Customers.Find(c => c.Id == item.CustomerID);
+    var asset = Model.Assets.Find(a => a.Id == item.AssetID);
+    var checkOutDate = item.CheckOutDate.ToString("MM/dd/yyyy");
+    var dueDate = item.DueDate.ToString("MM/dd/yyyy");
+
+    <tr>
+        <td>
+            @asset.Manufacturer&nbsp;@asset.Serial
+        </td>
+        <td>
+            
+            @customer.FirstName&nbsp;@customer.LastName
+        </td>
+        <td>
+            @checkOutDate
+        </td>
+        <td>
+            @dueDate
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CheckInDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CheckedOutBy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CheckInBy)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Check-In", "CheckIn", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
